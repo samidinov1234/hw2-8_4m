@@ -4,4 +4,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="Skip">Пропустить</string>
     <string name="Пропустить">Пропустить</string>
+    <string name="note">Заметки</string>
+    <string name="ready">Готово</string>
+    <string name="title">Title</string>
 </resources>

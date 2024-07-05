@@ -1,60 +1,90 @@
 package com.example.zametka_1_4m.ui.fragment.note
 
+import android.app.AlertDialog
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.zametka_1_4m.App
 import com.example.zametka_1_4m.R
+import com.example.zametka_1_4m.databinding.FragmentNoteBinding
+import com.example.zametka_1_4m.ui.adapters.NoteAdapter
+import com.example.zametka_1_4m.ui.adapters.NoteModel
+import com.example.zametka_1_4m.ui.interfaces.OnClick
+import com.example.zametka_1_4m.ui.interfaces.OnClickItem
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [NoteFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class NoteFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+class NoteFragment : Fragment(), OnClick, OnClickItem {
+    private var noteAdapter = NoteAdapter(this, this)
+    private lateinit var binding: FragmentNoteBinding
+    private var flag = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_note, container, false)
+        binding = FragmentNoteBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment NoteFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            NoteFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        noteAdapter = NoteAdapter(this, this)
+        val list = App.db?.noteDao()?.getAll()
+        binding.rvNote.adapter = noteAdapter
+        noteAdapter.submitList(list)
+        initAdapter()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateNoteList()
+    }
+
+    private fun initAdapter() = with(binding) {
+        btnPlus.setOnClickListener {
+            findNavController().navigate(R.id.ditailFragment)
+        }
+        imgShape.setOnClickListener {
+            if (flag) {
+                imgShape.setImageResource(R.drawable.ic_shape)
+                binding.rvNote.layoutManager = GridLayoutManager(requireContext(), 2)
+                flag = false
+            } else {
+                imgShape.setImageResource(R.drawable.ic_menu)
+                binding.rvNote.layoutManager = LinearLayoutManager(requireContext())
+                flag = true
             }
+        }
+    }
+
+    private fun updateNoteList() {
+        val notes = App.db?.noteDao()?.getAll()
+        Log.e("ololo", "updateNoteList: $notes", )
+        noteAdapter.submitList(notes)
+    }
+
+    override fun onLongClick(noteModel: NoteModel) {
+        val builder = AlertDialog.Builder(requireContext())
+        with(builder) {
+            setTitle("Вы точно хотите удалить?")
+            setPositiveButton("Да") { dialog, which ->
+                App.db?.noteDao()?.deleteNote(noteModel)
+            }
+            setNegativeButton("Нет") { dialog, which ->
+                dialog.cancel()
+            }
+            show()
+        }
+        builder.create()
+
+    }
+
+    override fun onClick(noteModel: NoteModel) {
+
     }
 }

@@ -16,4 +16,9 @@
         android:name="com.example.zametka_1_4m.ui.fragment.onboard.OnBoardPagingFragment"
         android:label="fragment_on_board_paging"
         tools:layout="@layout/fragment_on_board_paging" />
+    <fragment
+        android:id="@+id/ditailFragment"
+        android:name="com.example.zametka_1_4m.DitailFragment"
+        android:label="fragment_ditail"
+        tools:layout="@layout/fragment_ditail" />
 </navigation>
