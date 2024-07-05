@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph.xml"
     app:startDestination="@id/noteFragment">
@@ -9,7 +9,20 @@
         android:id="@+id/noteFragment"
         android:name="com.example.zametka_1_4m.ui.fragment.note.NoteFragment"
         android:label="fragment_note"
-        tools:layout="@layout/fragment_note" />
+        tools:layout="@layout/fragment_note" >
+        <action
+            android:id="@+id/action_noteFragment_to_ditailFragment"
+            app:destination="@id/ditailFragment">
+            <argument
+                android:name="noteId"
+                app:argType="integer"/>
+        </action>
+        <argument
+            android:name="id"
+            app:argType="integer"
+            android:defaultValue="-1"
+            />
+    </fragment>
 
     <fragment
         android:id="@+id/onBoardPagingFragment"
@@ -20,5 +33,10 @@
         android:id="@+id/ditailFragment"
         android:name="com.example.zametka_1_4m.DitailFragment"
         android:label="fragment_ditail"
-        tools:layout="@layout/fragment_ditail" />
+        tools:layout="@layout/fragment_ditail" >
+        <argument
+            android:name="id"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
 </navigation>

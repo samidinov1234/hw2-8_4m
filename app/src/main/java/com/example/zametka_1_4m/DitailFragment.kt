@@ -20,7 +20,7 @@ import java.util.Locale
 
 class DitailFragment : Fragment() {
     private lateinit var binding: FragmentDitailBinding
-    //private var note: Long = -1L
+    private var noteId: Int = -1
     var color: Int = 0
     var timeText = ""
     var dateText = ""
@@ -103,18 +103,36 @@ class DitailFragment : Fragment() {
     }
 
     private fun initListener() {
+        arguments?.let { args ->
+            noteId = args.getInt("noteId", -1)
+            Log.e("ololo", "initListener: $noteId", )
+        }
+        if (noteId!=-1){
+            val note: NoteModel = App.db.noteDao().getNoteById(noteId)
+            binding.etText.setText(note.text)
+            binding.etTitle.setText(note.title)
+        }
         binding.tvSend.setOnClickListener {
-            val noteModel = NoteModel(
-                title = binding.etTitle.text.toString(),
-                text = binding.etText.text.toString(),
-                color = color,
-                time = timeText,
-                date = dateText
-            )
-            App.db?.noteDao()?.insertNote(noteModel)
-            val list = App.db?.noteDao()?.getAll()
-            Log.e("ololo", "initListener: $noteModel", )
-            Log.e("ololo", "initListener: $list", )
+            if (noteId != -1) {
+                val noteModel = NoteModel(
+                    id = noteId,
+                    title = binding.etTitle.text.toString(),
+                    text = binding.etText.text.toString(),
+                    color = color,
+                    time = timeText,
+                    date = dateText
+                )
+                App.db?.noteDao()?.updateNote(noteModel)
+            }else{
+                val noteModel = NoteModel(
+                    title = binding.etTitle.text.toString(),
+                    text = binding.etText.text.toString(),
+                    color = color,
+                    time = timeText,
+                    date = dateText
+                )
+                App.db?.noteDao()?.insertNote(noteModel)
+            }
             findNavController().navigate(
                 R.id.noteFragment
             )

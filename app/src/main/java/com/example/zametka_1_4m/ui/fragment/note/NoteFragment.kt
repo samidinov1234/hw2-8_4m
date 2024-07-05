@@ -64,7 +64,7 @@ class NoteFragment : Fragment(), OnClick, OnClickItem {
 
     private fun updateNoteList() {
         val notes = App.db?.noteDao()?.getAll()
-        Log.e("ololo", "updateNoteList: $notes", )
+        Log.e("ololo", "updateNoteList: $notes")
         noteAdapter.submitList(notes)
     }
 
@@ -74,6 +74,7 @@ class NoteFragment : Fragment(), OnClick, OnClickItem {
             setTitle("Вы точно хотите удалить?")
             setPositiveButton("Да") { dialog, which ->
                 App.db?.noteDao()?.deleteNote(noteModel)
+                updateNoteList()
             }
             setNegativeButton("Нет") { dialog, which ->
                 dialog.cancel()
@@ -85,6 +86,8 @@ class NoteFragment : Fragment(), OnClick, OnClickItem {
     }
 
     override fun onClick(noteModel: NoteModel) {
-
+        Log.e("ololo", "onClick: ${noteModel.id}", )
+        val action = NoteFragmentDirections.actionNoteFragmentToDitailFragment(noteModel.id)
+        findNavController().navigate(action)
     }
 }

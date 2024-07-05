@@ -26,9 +26,9 @@ class NoteAdapter(private val onLongClick: OnClickItem, private val onClick: OnC
             onLongClick.onLongClick(getItem(position))
             true
         }
-        /*holder.itemView.setOnClickListener {
+        holder.itemView.setOnClickListener {
             onClick.onClick(getItem(position))
-        }*/
+        }
     }
 
 
