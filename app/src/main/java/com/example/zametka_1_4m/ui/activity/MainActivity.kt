@@ -19,8 +19,13 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
 
 
-        if (!pref.isShowed()){
-            navController.navigate(R.id.onBoardPagingFragment)
+
+        if (!pref.getUserAuthed()){
+            navController.navigate(R.id.authFragment)
+        } else {
+            if (!pref.isShowed()){
+                navController.navigate(R.id.onBoardPagingFragment)
+            }
         }
 
     }
