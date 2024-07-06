@@ -6,7 +6,7 @@
     android:background="@color/black"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".AuthFragment">
+    tools:context=".ui.fragment.auth.AuthFragment">
 
     <ImageView
         android:src="@drawable/img"

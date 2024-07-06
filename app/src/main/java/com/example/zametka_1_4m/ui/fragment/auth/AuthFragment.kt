@@ -1,4 +1,4 @@
-package com.example.zametka_1_4m
+package com.example.zametka_1_4m.ui.fragment.auth
 
 import android.content.Intent
 import android.os.Bundle

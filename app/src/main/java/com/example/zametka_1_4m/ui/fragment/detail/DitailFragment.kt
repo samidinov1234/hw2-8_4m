@@ -1,4 +1,4 @@
-package com.example.zametka_1_4m
+package com.example.zametka_1_4m.ui.fragment.detail
 
 import android.os.Bundle
 import android.text.Editable
@@ -10,6 +10,8 @@ import android.view.ViewGroup
 import android.widget.RadioButton
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.zametka_1_4m.App
+import com.example.zametka_1_4m.R
 import com.example.zametka_1_4m.databinding.FragmentDitailBinding
 import com.example.zametka_1_4m.ui.adapters.NoteModel
 import java.text.DateFormat

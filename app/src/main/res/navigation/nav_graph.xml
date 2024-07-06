@@ -31,7 +31,7 @@
         tools:layout="@layout/fragment_on_board_paging" />
     <fragment
         android:id="@+id/ditailFragment"
-        android:name="com.example.zametka_1_4m.DitailFragment"
+        android:name="com.example.zametka_1_4m.ui.fragment.detail.DitailFragment"
         android:label="fragment_ditail"
         tools:layout="@layout/fragment_ditail" >
         <argument
@@ -41,7 +41,7 @@
     </fragment>
     <fragment
         android:id="@+id/authFragment"
-        android:name="com.example.zametka_1_4m.AuthFragment"
+        android:name="com.example.zametka_1_4m.ui.fragment.auth.AuthFragment"
         android:label="fragment_auth"
         tools:layout="@layout/fragment_auth" />
 </navigation>
