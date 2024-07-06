@@ -7,4 +7,6 @@
     <string name="note">Заметки</string>
     <string name="ready">Готово</string>
     <string name="title">Title</string>
+    <string name="menu_open">Open</string>
+    <string name="menu_close">Close</string>
 </resources>

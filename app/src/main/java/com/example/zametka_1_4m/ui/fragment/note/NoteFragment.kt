@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.zametka_1_4m.App
 import com.example.zametka_1_4m.R
 import com.example.zametka_1_4m.databinding.FragmentNoteBinding
+import com.example.zametka_1_4m.ui.activity.MainActivity
 import com.example.zametka_1_4m.ui.adapters.NoteAdapter
 import com.example.zametka_1_4m.ui.adapters.NoteModel
 import com.example.zametka_1_4m.ui.interfaces.OnClick
@@ -33,12 +35,17 @@ class NoteFragment : Fragment(), OnClick, OnClickItem {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.imgMenu.setOnClickListener {
+            val mainActivity = requireActivity() as MainActivity
+            mainActivity.openDrawer()
+        }
         noteAdapter = NoteAdapter(this, this)
         val list = App.db?.noteDao()?.getAll()
         binding.rvNote.adapter = noteAdapter
         noteAdapter.submitList(list)
         initAdapter()
     }
+
 
     override fun onResume() {
         super.onResume()
@@ -86,7 +93,7 @@ class NoteFragment : Fragment(), OnClick, OnClickItem {
     }
 
     override fun onClick(noteModel: NoteModel) {
-        Log.e("ololo", "onClick: ${noteModel.id}", )
+        Log.e("ololo", "onClick: ${noteModel.id}")
         val action = NoteFragmentDirections.actionNoteFragmentToDitailFragment(noteModel.id)
         findNavController().navigate(action)
     }

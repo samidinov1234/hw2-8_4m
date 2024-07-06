@@ -56,6 +56,8 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    implementation ("com.github.bumptech.glide:glide:4.12.0")
+
     implementation(platform("com.google.firebase:firebase-bom:32.7.2"))
     implementation ("com.google.android.gms:play-services-auth:19.2.0")
 
